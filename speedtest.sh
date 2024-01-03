@@ -19,12 +19,12 @@ run_speedtest()
 
     # Start speed test
     echo "Running a Speed Test..."
-    JSON=$(speedtest --accept-license --accept-gdpr -f json)
-    DOWNLOAD="$(echo $JSON | jq -r '.download.bandwidth')"
-    UPLOAD="$(echo $JSON | jq -r '.upload.bandwidth')"
-    PING="$(echo $JSON | jq -r '.ping.latency')"
-    echo "Your download speed is $(($DOWNLOAD  / 125000)) Mbps ($DOWNLOAD Bytes/s)."
-    echo "Your upload speed is $(($UPLOAD  / 125000)) Mbps ($UPLOAD Bytes/s)."
+    JSON=$(speedtest --json)
+    DOWNLOAD="$(echo $JSON | jq -r '.download')"
+    UPLOAD="$(echo $JSON | jq -r '.upload')"
+    PING="$(echo $JSON | jq -r '.ping')"
+    echo "Your download speed is $(echo "scale=2; $DOWNLOAD / 1000000" | bc -l) Mbps ($DOWNLOAD b/s)."
+    echo "Your upload speed is $(echo "scale=2; $UPLOAD / 1000000" | bc -l) Mbps ($UPLOAD b/s)."
     echo "Your ping is $PING ms."
 
     # Save results in the database
