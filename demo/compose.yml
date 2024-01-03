@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  speedtest:
+    build: https://github.com/meerumschlungen/speedtest.git
+    restart: unless-stopped
+    env_file:
+      - .env
+networks: {}
